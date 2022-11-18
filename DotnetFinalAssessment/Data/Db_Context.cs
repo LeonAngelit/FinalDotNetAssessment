@@ -34,7 +34,7 @@ namespace DotnetFinalAssessment.Data
                 vehicle.Property(p => p.Brand).IsRequired().HasMaxLength(60);
                 vehicle.Property(p => p.Vin).IsRequired();
                 vehicle.Property(p => p.Color).IsRequired();
-                vehicle.Property(p => p.Date).IsRequired();
+                vehicle.Property(p => p.Year).IsRequired();
                 vehicle.Property(p => p.OwnerId).IsRequired();
             });
 

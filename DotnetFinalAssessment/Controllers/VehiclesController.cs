@@ -57,7 +57,7 @@ namespace DotnetFinalAssessment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Brand,Vin,Color,Date,OwnerId")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,Brand,Vin,Color,Year,OwnerId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace DotnetFinalAssessment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Vin,Color,Date,OwnerId")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Vin,Color,Year,OwnerId")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {

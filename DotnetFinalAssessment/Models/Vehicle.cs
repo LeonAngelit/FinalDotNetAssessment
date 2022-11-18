@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 
@@ -21,12 +22,13 @@ namespace DotnetFinalAssessment.Models
         [StringLength(45)]
         public string Color { get; set; }
         [Required]
-        [Display(Name = "Date")]
+        [Display(Name = "Year")]
      
-        public int Date { get; set; } = DateTime.Now.Year;
+        public int Year { get; set; } = DateTime.Now.Year;
         [Required]
         [Display(Name = "Owner Id")]
-      
+
+        [Column("Owner_Id")]
         public int OwnerId{ get; set; }
         public virtual Owner? Owner { get; set; }
 
