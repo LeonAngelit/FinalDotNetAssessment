@@ -5,35 +5,51 @@ namespace DotnetFinalAssessment.Data
 {
     public class dbContext: DbContext
     {
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Claim> Claims { get; set; }
 
         public dbContext(DbContextOptions<dbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
-
-            modelBuilder.Entity<Question>(question =>
+            modelBuilder.Entity<Owner>(owner =>
             {
-                question.ToTable("questions");
-                question.HasKey(p => p.Id);
-                question.Property(p => p.Title).IsRequired().HasMaxLength(150);
-                question.Property(p => p.Subject).IsRequired();
-                question.Property(p => p.Options).IsRequired();
+                owner.ToTable("owners");
+                owner.HasKey(p => p.Id);
+                owner.Property(p => p.FirstName).IsRequired().HasMaxLength(150);
+                owner.Property(p => p.LastName).IsRequired();
+                owner.Property(p => p.DriverLicense).IsRequired();
 
             });
 
-
-
-            modelBuilder.Entity<User>(user =>
+            modelBuilder.Entity<Vehicle>(vehicle =>
             {
-                user.ToTable("users");
-                user.HasKey(p => p.Id);
-                user.Property(p => p.email).IsRequired().HasMaxLength(60);
-                user.Property(p => p.answers).IsRequired();
+                vehicle.ToTable("vehicles");
+                vehicle.HasKey(p => p.Id);
+                vehicle.
+                HasOne(p => p.Owner).
+                WithMany(p => p.Vehicles).
+                HasForeignKey(p => p.OwnerId);
+                vehicle.Property(p => p.Brand).IsRequired().HasMaxLength(60);
+                vehicle.Property(p => p.Vin).IsRequired();
+                vehicle.Property(p => p.Color).IsRequired();
+                vehicle.Property(p => p.Date).IsRequired();
+                vehicle.Property(p => p.OwnerId).IsRequired();
+            });
 
+            modelBuilder.Entity<Claim>(claim =>
+            {
+                claim.ToTable("claims");
+                claim.HasKey(p => p.Id);
+                claim.
+                HasOne(p => p.Vehicle).
+                WithMany(p => p.Claims).
+                HasForeignKey(p => p.VehicleId);
+                claim.Property(p => p.Description).IsRequired().HasMaxLength(60);
+                claim.Property(p => p.Status).IsRequired();
+                claim.Property(p => p.Date).IsRequired();
+                claim.Property(p => p.VehicleId).IsRequired();
             });
         }
     }
