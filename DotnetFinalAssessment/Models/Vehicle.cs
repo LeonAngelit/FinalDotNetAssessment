@@ -26,9 +26,9 @@ namespace DotnetFinalAssessment.Models
         public int Year { get; set; } = DateTime.Now.Year;
         [Required]
         [Display(Name = "Owner name")]
-
         [Column("Owner_Id")]
         public int OwnerId{ get; set; }
+        [JsonIgnore]
         public virtual Owner? Owner { get; set; }
 
         [JsonIgnore]

@@ -16,14 +16,14 @@ namespace DotnetFinalAssessment.Controllers
             _context = context;
         }
 
-        // GET: Vehicles
+       
         public async Task<IActionResult> Index()
         {
             var db_Context = _context.Vehicles.Include(v => v.Owner);
             return View(await db_Context.ToListAsync());
         }
 
-        // GET: Vehicles/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Vehicles == null)
@@ -42,16 +42,14 @@ namespace DotnetFinalAssessment.Controllers
             return View(vehicle);
         }
 
-        // GET: Vehicles/Create
+    
         public IActionResult Create()
         {
             ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "FirstName");
             return View();
         }
 
-        // POST: Vehicles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Brand,Vin,Color,Year,OwnerId")] Vehicle vehicle)
@@ -66,7 +64,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(vehicle);
         }
 
-        // GET: Vehicles/Edit/5
+ 
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Vehicles == null)
@@ -83,9 +81,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(vehicle);
         }
 
-        // POST: Vehicles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Brand,Vin,Color,Year,OwnerId")] Vehicle vehicle)
@@ -119,7 +115,6 @@ namespace DotnetFinalAssessment.Controllers
             return View(vehicle);
         }
 
-        // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Vehicles == null)
@@ -138,7 +133,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(vehicle);
         }
 
-        // POST: Vehicles/Delete/5
+     
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -160,6 +155,68 @@ namespace DotnetFinalAssessment.Controllers
         private bool VehicleExists(int id)
         {
           return _context.Vehicles.Any(e => e.Id == id);
+        }
+
+        //API 
+        [Route("api/vehicles")]
+        public IActionResult IndexApi()
+        {
+            return Ok(_context.Vehicles);
+        }
+
+        [Route("api/vehicles/{Id}")]
+        public IActionResult DetailsAPI(int Id)
+        {
+            return Ok(_context.Vehicles.Find(Id));
+        }
+
+        [HttpPost]
+        [Route("api/vehicles")]
+        public IActionResult CreateAPI([FromBody] Vehicle vehicle)
+
+        {
+            _context.Add(vehicle);
+
+            _context.SaveChanges();
+            return CreatedAtAction("createAPI", new { id = vehicle.Id }, vehicle);
+        }
+
+        [HttpPut]
+        [Route("api/vehicles/{Id}")]
+        public IActionResult UpdateAPI(int Id, [FromBody] Vehicle vehicle)
+
+        {
+
+            var currentVehicle = _context.Vehicles.Find(Id);
+            if (currentVehicle != null)
+            {
+                currentVehicle.Brand = vehicle.Brand;
+                currentVehicle.Vin = vehicle.Vin;
+                currentVehicle.Color = vehicle.Color;
+                currentVehicle.Year = vehicle.Year;
+                currentVehicle.OwnerId = vehicle.OwnerId;
+
+            }
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("api/vehicles/{Id}")]
+        public IActionResult DeleteAPI(int Id)
+
+        {
+
+            var currentVehicle = _context.Vehicles.Find(Id);
+            if (currentVehicle != null)
+            {
+                _context.Remove(currentVehicle);
+            }
+
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }

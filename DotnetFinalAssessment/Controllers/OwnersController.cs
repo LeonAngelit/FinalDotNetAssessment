@@ -19,13 +19,14 @@ namespace DotnetFinalAssessment.Controllers
             _context = context;
         }
 
-        // GET: Owners
+        
         public async Task<IActionResult> Index()
         {
               return View(await _context.Owners.ToListAsync());
         }
+    
 
-        // GET: Owners/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Owners == null)
@@ -43,15 +44,12 @@ namespace DotnetFinalAssessment.Controllers
             return View(owner);
         }
 
-        // GET: Owners/Create
+        
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Owners/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,DriverLicense")] Owner owner)
@@ -65,7 +63,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(owner);
         }
 
-        // GET: Owners/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Owners == null)
@@ -81,9 +79,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(owner);
         }
 
-        // POST: Owners/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,DriverLicense")] Owner owner)
@@ -116,7 +112,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(owner);
         }
 
-        // GET: Owners/Delete/5
+       
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Owners == null)
@@ -134,7 +130,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(owner);
         }
 
-        // POST: Owners/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -157,5 +153,69 @@ namespace DotnetFinalAssessment.Controllers
         {
           return _context.Owners.Any(e => e.Id == id);
         }
+
+
+
+
+        //API 
+        [Route("api/owners")]
+        public IActionResult IndexApi()
+        {
+            return Ok(_context.Owners);
+        }
+
+        [Route("api/owners/{Id}")]
+        public IActionResult DetailsAPI(int Id)
+        {
+            return Ok(_context.Owners.Find(Id));
+        }
+
+        [HttpPost]
+        [Route("api/owners")]
+        public IActionResult CreateAPI([FromBody] Owner owner)
+
+        {
+            _context.Add(owner);
+
+            _context.SaveChanges();
+            return CreatedAtAction("createAPI", new { id = owner.Id }, owner);
+        }
+
+        [HttpPut]
+        [Route("api/owners/{Id}")]
+        public IActionResult UpdateAPI(int Id, [FromBody] Owner owner)
+
+        {
+
+            var currentOwner = _context.Owners.Find(Id);
+            if (currentOwner != null)
+            {
+                currentOwner.FirstName = owner.FirstName;
+                currentOwner.LastName = owner.LastName;
+                currentOwner.DriverLicense = owner.DriverLicense;
+
+            }
+
+           _context.SaveChanges();
+
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("api/owners/{Id}")]
+        public IActionResult DeleteAPI(int Id)
+
+        {
+
+            var currentOwner = _context.Owners.Find(Id);
+            if (currentOwner != null)
+            {
+                _context.Remove(currentOwner);
+            }
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }

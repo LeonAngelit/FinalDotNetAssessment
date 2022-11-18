@@ -19,14 +19,14 @@ namespace DotnetFinalAssessment.Controllers
             _context = context;
         }
 
-        // GET: Claims
+     
         public async Task<IActionResult> Index()
         {
             var db_Context = _context.Claims.Include(c => c.Vehicle);
             return View(await db_Context.ToListAsync());
         }
 
-        // GET: Claims/Details/5
+       
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Claims == null)
@@ -45,16 +45,14 @@ namespace DotnetFinalAssessment.Controllers
             return View(claim);
         }
 
-        // GET: Claims/Create
+       
         public IActionResult Create()
         {
             ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Vin");
             return View();
         }
 
-        // POST: Claims/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Description,Status,Date,VehicleId")] Claim claim)
@@ -69,7 +67,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(claim);
         }
 
-        // GET: Claims/Edit/5
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Claims == null)
@@ -86,9 +84,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(claim);
         }
 
-        // POST: Claims/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Description,Status,Date,VehicleId")] Claim claim)
@@ -122,7 +118,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(claim);
         }
 
-        // GET: Claims/Delete/5
+       
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Claims == null)
@@ -141,7 +137,7 @@ namespace DotnetFinalAssessment.Controllers
             return View(claim);
         }
 
-        // POST: Claims/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -164,5 +160,68 @@ namespace DotnetFinalAssessment.Controllers
         {
           return _context.Claims.Any(e => e.Id == id);
         }
+
+
+        //API 
+        [Route("api/claims")]
+        public IActionResult IndexApi()
+        {
+            return Ok(_context.Claims);
+        }
+
+        [Route("api/claims/{Id}")]
+        public IActionResult DetailsAPI(int Id)
+        {
+            return Ok(_context.Claims.Find(Id));
+        }
+
+        [HttpPost]
+        [Route("api/claims")]
+        public IActionResult CreateAPI([FromBody] Claim claim)
+
+        {
+            _context.Add(claim);
+
+            _context.SaveChanges();
+            return CreatedAtAction("createAPI", new { id = claim.Id }, claim);
+        }
+
+        [HttpPut]
+        [Route("api/claims/{Id}")]
+        public IActionResult UpdateAPI(int Id, [FromBody] Claim claim)
+
+        {
+
+            var currentClaim = _context.Claims.Find(Id);
+            if (currentClaim != null)
+            {
+                currentClaim.Description = claim.Description;
+                currentClaim.Status = claim.Status;
+                currentClaim.Date = claim.Date;
+                currentClaim.VehicleId = claim.VehicleId;
+
+            }
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        [HttpDelete]
+        [Route("api/claims/{Id}")]
+        public IActionResult DeleteAPI(int Id)
+
+        {
+
+            var currentClaim= _context.Claims.Find(Id);
+            if (currentClaim != null)
+            {
+                _context.Remove(currentClaim);
+            }
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }
