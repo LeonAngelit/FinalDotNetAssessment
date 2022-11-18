@@ -23,10 +23,9 @@ namespace DotnetFinalAssessment.Models
         public string Color { get; set; }
         [Required]
         [Display(Name = "Year")]
-     
         public int Year { get; set; } = DateTime.Now.Year;
         [Required]
-        [Display(Name = "Owner Id")]
+        [Display(Name = "Owner name")]
 
         [Column("Owner_Id")]
         public int OwnerId{ get; set; }

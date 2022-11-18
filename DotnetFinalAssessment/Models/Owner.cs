@@ -19,7 +19,6 @@ namespace DotnetFinalAssessment.Models
         [Display(Name = "Driver License")]
         [StringLength(45)]
         public string DriverLicense { get; set; }
-
         [JsonIgnore]
         public virtual ICollection<Vehicle>? Vehicles { get; set; }
     }

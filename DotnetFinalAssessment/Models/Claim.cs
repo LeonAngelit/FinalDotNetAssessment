@@ -18,7 +18,7 @@ namespace DotnetFinalAssessment.Models
         [Display(Name = "Date")]
         public DateTime Date { get; set; } = DateTime.Now;
         [Required]
-        [Display(Name = "Vehicle Id")]
+        [Display(Name = "VIN")]
       
         public int VehicleId { get; set; }
         public virtual Vehicle? Vehicle { get; set; }

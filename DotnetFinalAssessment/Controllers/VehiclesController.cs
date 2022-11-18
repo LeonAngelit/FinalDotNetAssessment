@@ -45,7 +45,7 @@ namespace DotnetFinalAssessment.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "Id");
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "FirstName");
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace DotnetFinalAssessment.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "Id", vehicle.OwnerId);
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "FirstName", vehicle.OwnerId);
             return View(vehicle);
         }
 
@@ -79,7 +79,7 @@ namespace DotnetFinalAssessment.Controllers
             {
                 return NotFound();
             }
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "Id", vehicle.OwnerId);
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "FirstName", vehicle.OwnerId);
             return View(vehicle);
         }
 
@@ -115,7 +115,7 @@ namespace DotnetFinalAssessment.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "Id", vehicle.OwnerId);
+            ViewData["OwnerId"] = new SelectList(_context.Owners, "Id", "FirstName", vehicle.OwnerId);
             return View(vehicle);
         }
 
