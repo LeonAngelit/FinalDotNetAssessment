@@ -16,7 +16,7 @@ namespace DotnetFinalAssessment.Models
         [StringLength(45)]
         public string Status { get; set; }
         [Required]
-        [Display(Name = "Brand")]
+        [Display(Name = "Date")]
         public DateTime Date { get; set; } = DateTime.Now;
         [Required]
         [Display(Name = "Vehicle Id")]
