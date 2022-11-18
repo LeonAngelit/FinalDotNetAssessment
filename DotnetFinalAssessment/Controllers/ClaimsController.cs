@@ -48,7 +48,7 @@ namespace DotnetFinalAssessment.Controllers
         // GET: Claims/Create
         public IActionResult Create()
         {
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Brand");
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Vin");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace DotnetFinalAssessment.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Brand", claim.VehicleId);
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Vin", claim.VehicleId);
             return View(claim);
         }
 
@@ -82,7 +82,7 @@ namespace DotnetFinalAssessment.Controllers
             {
                 return NotFound();
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Brand", claim.VehicleId);
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Vin", claim.VehicleId);
             return View(claim);
         }
 
@@ -118,7 +118,7 @@ namespace DotnetFinalAssessment.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Brand", claim.VehicleId);
+            ViewData["VehicleId"] = new SelectList(_context.Vehicles, "Id", "Vin", claim.VehicleId);
             return View(claim);
         }
 
