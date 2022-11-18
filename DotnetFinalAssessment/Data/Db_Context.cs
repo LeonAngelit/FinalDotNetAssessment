@@ -3,13 +3,13 @@ using DotnetFinalAssessment.Models;
 
 namespace DotnetFinalAssessment.Data
 {
-    public class dbContext: DbContext
+    public class Db_Context: DbContext
     {
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Claim> Claims { get; set; }
 
-        public dbContext(DbContextOptions<dbContext> options) : base(options) { }
+        public Db_Context(DbContextOptions<Db_Context> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
