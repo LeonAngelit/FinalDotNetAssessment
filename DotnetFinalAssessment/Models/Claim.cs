@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace DotnetFinalAssessment.Models
@@ -19,6 +20,7 @@ namespace DotnetFinalAssessment.Models
         public DateTime Date { get; set; } = DateTime.Now;
         [Required]
         [Display(Name = "Vehicle Id")]
+        [Column("Vehicle_Id")]
       
         public int VehicleId { get; set; }
         public virtual Vehicle? Vehicle { get; set; }
